@@ -1,0 +1,8 @@
+node_modules/
+recorder/package-lock.json
+examples/*/out/*.webm
+examples/*/out/frames/
+examples/*/out/record.json
+walkthrough/out/
+*.log
+.DS_Store

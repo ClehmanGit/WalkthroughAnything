@@ -1,0 +1,15 @@
+{
+  "name": "walkthrough-anything-recorder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Records and encodes WalkthroughAnything tours with Playwright and ffmpeg.",
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium",
+    "record": "node record.js",
+    "encode": "node encode.js"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "1.1.0",
+    "playwright": "1.49.1"
+  }
+}

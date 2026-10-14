@@ -1,0 +1,56 @@
+/* WalkthroughAnything tour chrome.
+   Everything is namespaced wa-* and lives on <body>, outside the app's own DOM.
+   Theme it by overriding the --wa-* variables (see engine/tour.js: W.theme()). */
+:root {
+  --wa-accent: #0B4FD6;
+  --wa-navy: #0B1D4A;
+  --wa-card: #FFFFFF;
+  --wa-ink: #1C1B18;
+  --wa-ink-2: #4A4740;
+  --wa-ink-3: #7A766D;
+  --wa-dim: rgba(11, 29, 74, .38);
+  --wa-display: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  --wa-body: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --wa-mono: 'IBM Plex Mono', Consolas, monospace;
+  --wa-card-w: 330px;
+  --wa-trs: 1; /* speed factor; the recorder sets 2 and time-stretches the video back */
+}
+
+#wa-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; transition: transform calc(.85s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1); will-change: transform; filter: drop-shadow(0 2px 4px rgba(0,0,0,.35)); }
+#wa-cursor svg { display: block; transition: transform calc(.12s * var(--wa-trs)); transform-origin: 4px 3px; }
+#wa-cursor.press svg { transform: scale(.82); }
+
+.wa-ripple { position: fixed; z-index: 2147482999; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--wa-accent); pointer-events: none; animation: waRipple calc(.55s * var(--wa-trs)) ease-out forwards; }
+@keyframes waRipple { from { transform: translate(-50%,-50%) scale(1); opacity: .9; } to { transform: translate(-50%,-50%) scale(5); opacity: 0; } }
+
+#wa-spot { position: fixed; z-index: 2147482000; border-radius: 10px; pointer-events: none; opacity: 0; border: 2px solid var(--wa-accent);
+  box-shadow: 0 0 0 9999px var(--wa-dim), 0 0 0 4px color-mix(in srgb, var(--wa-accent) 16%, transparent);
+  transition: left calc(.6s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1), top calc(.6s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1), width calc(.6s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1), height calc(.6s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1), opacity calc(.45s * var(--wa-trs)); }
+#wa-spot.track { transition: opacity calc(.45s * var(--wa-trs)); }
+
+#wa-card { position: fixed; z-index: 2147482500; width: var(--wa-card-w); background: var(--wa-card); color: var(--wa-ink); border-radius: 10px; padding: 18px 20px 16px; border-left: 4px solid var(--wa-accent);
+  box-shadow: 0 18px 50px rgba(11,29,74,.22), 0 2px 6px rgba(11,29,74,.08); opacity: 0; transform: translateY(8px); pointer-events: none; font-family: var(--wa-body);
+  transition: opacity calc(.35s * var(--wa-trs)) ease-out, transform calc(.35s * var(--wa-trs)) cubic-bezier(.22,1,.36,1), left calc(.5s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1), top calc(.5s * var(--wa-trs)) cubic-bezier(.3,.05,.15,1); }
+#wa-card.show { opacity: 1; transform: none; }
+#wa-card .n { font-family: var(--wa-mono); font-size: 11px; color: var(--wa-accent); margin-bottom: 6px; letter-spacing: .04em; }
+#wa-card h3 { font-family: var(--wa-display); font-size: 17px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; line-height: 1.2; color: var(--wa-ink); }
+#wa-card p { font-size: 13.5px; line-height: 1.55; color: var(--wa-ink-2); margin: 0; }
+
+#wa-chapter { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 10px); z-index: 2147482600; background: var(--wa-navy); color: #fff; border-radius: 999px; padding: 9px 18px 9px 12px;
+  display: flex; align-items: center; gap: 10px; font-family: var(--wa-display); font-weight: 600; font-size: 14px; letter-spacing: -0.01em; opacity: 0; pointer-events: none;
+  box-shadow: 0 10px 30px rgba(11,29,74,.3); transition: opacity calc(.4s * var(--wa-trs)) ease-out, transform calc(.4s * var(--wa-trs)) cubic-bezier(.22,1,.36,1); }
+#wa-chapter.show { opacity: 1; transform: translate(-50%, 0); }
+#wa-chapter .k { font-family: var(--wa-mono); font-size: 11px; background: var(--wa-accent); padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+
+#wa-title { position: fixed; inset: 0; z-index: 2147483100; background: var(--wa-card); color: var(--wa-navy); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; font-family: var(--wa-body);
+  transition: opacity calc(.6s * var(--wa-trs)) ease; }
+#wa-title.show { opacity: 1; }
+#wa-title img { width: 420px; max-width: 70vw; height: auto; display: block; transform: translateY(10px); opacity: 0; transition: opacity calc(.7s * var(--wa-trs)) ease-out, transform calc(.7s * var(--wa-trs)) cubic-bezier(.22,1,.36,1); }
+#wa-title h1 { font-family: var(--wa-display); font-size: 54px; font-weight: 800; letter-spacing: -0.035em; margin: 0; transform: translateY(10px); opacity: 0; transition: opacity calc(.7s * var(--wa-trs)) ease-out, transform calc(.7s * var(--wa-trs)) cubic-bezier(.22,1,.36,1); }
+#wa-title.show img, #wa-title.show h1 { opacity: 1; transform: none; }
+#wa-title p { margin: 22px 0 0; font-size: 16px; color: var(--wa-ink-3); font-family: var(--wa-mono); opacity: 0; transition: opacity calc(.6s * var(--wa-trs)) ease-out calc(.4s * var(--wa-trs)); }
+#wa-title.show p { opacity: 1; }
+#wa-title .flow { display: flex; gap: 14px; align-items: center; margin-top: 30px; font-family: var(--wa-display); font-weight: 700; font-size: 22px; color: var(--wa-navy); }
+#wa-title .flow span { opacity: 0; transform: translateY(6px); transition: opacity calc(.4s * var(--wa-trs)), transform calc(.4s * var(--wa-trs)); }
+#wa-title .flow.go span { opacity: 1; transform: none; }
+#wa-title .flow i { font-style: normal; color: var(--wa-accent); opacity: .5; }
